@@ -10,7 +10,26 @@ Example:
 Attributes:
     __version__ (str): The module's version string.
 """
+import argparse
+
 __version__ = '0.1.0'
+
+
+def build_argument_parser():
+    """Constructs and configures an :obj:`argparse.ArgumentParser`.
+
+    The parser is configured with the program name, description, and a
+    positional argument for the input file.
+
+    Returns:
+        A configured instance of :obj:`argparse.ArgumentParser`.
+    """
+    argument_parser = argparse.ArgumentParser(
+        prog='wordsearch', description='Solves word search puzzles.')
+    argument_parser.add_argument('puzzle_file',
+                                 help='The input puzzle file to solve.')
+    return argument_parser
+
 
 def main(argv=None):
     """The main entry point of the program.
@@ -18,7 +37,10 @@ def main(argv=None):
     Args:
         argv (:obj:`list` of :obj:`str`): A list of command line arguments.
     """
+    argument_parser = build_argument_parser()
+    arguments = argument_parser.parse_args()
     print('Hello, world!')
+
 
 if __name__ == '__main__':
     main()
