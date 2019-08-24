@@ -10,7 +10,12 @@ Example:
 Attributes:
     __version__ (str): The module's version string.
 """
+import argparse
+
 __version__ = '0.1.0'
+
+def build_argument_parser():
+    return argparse.ArgumentParser()
 
 def main(argv=None):
     """The main entry point of the program.
