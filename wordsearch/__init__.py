@@ -15,6 +15,8 @@ import argparse
 __version__ = '0.1.0'
 
 def parse_puzzle(puzzle_file):
+    if puzzle_file is None:
+        raise ValueError()
     words = None
     puzzle = []
     for line in puzzle_file:

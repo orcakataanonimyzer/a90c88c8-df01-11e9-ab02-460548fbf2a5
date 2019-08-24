@@ -1,3 +1,4 @@
+import pytest
 import unittest
 import argparse
 import subprocess
@@ -106,3 +107,6 @@ class PuzzleParserTest(unittest.TestCase):
             words, puzzle = wordsearch.parse_puzzle(puzzle_file)
         assert words == word_list
 
+    def test_parse_puzzle_raises_value_error_if_puzzle_file_is_null(self):
+        with pytest.raises(ValueError):
+            assert wordsearch.parse_puzzle(None)
