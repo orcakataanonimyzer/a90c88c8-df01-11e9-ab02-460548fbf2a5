@@ -4,6 +4,27 @@ import argparse
 import subprocess
 import wordsearch
 
+PILLAR_SAMPLE_WORD_LIST = 'BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA'.split(',')
+# yapf: disable
+PILLAR_SAMPLE_PUZZLE_BOARD = [
+    ['U','M','K','H','U','L','K','I','N','V','J','O','C','W','E'],
+    ['L','L','S','H','K','Z','Z','W','Z','C','G','J','U','Y','G'],
+    ['H','S','U','P','J','P','R','J','D','H','S','B','X','T','G'],
+    ['B','R','J','S','O','E','Q','E','T','I','K','K','G','L','E'],
+    ['A','Y','O','A','G','C','I','R','D','Q','H','R','T','C','D'],
+    ['S','C','O','T','T','Y','K','Z','R','E','P','P','X','P','F'],
+    ['B','L','Q','S','L','N','E','E','E','V','U','L','F','M','Z'],
+    ['O','K','R','I','K','A','M','M','R','M','F','B','A','P','P'],
+    ['N','U','I','I','Y','H','Q','M','E','M','Q','R','Y','F','S'],
+    ['E','Y','Z','Y','G','K','Q','J','P','C','Q','W','Y','A','K'],
+    ['S','J','F','Z','M','Q','I','B','D','B','E','M','K','W','D'],
+    ['T','G','L','B','H','C','B','E','C','H','T','O','Y','I','K'],
+    ['O','J','Y','E','U','L','N','C','C','L','Y','B','Z','U','H'],
+    ['W','Z','M','I','S','U','K','U','R','B','I','D','U','X','S'],
+    ['K','Y','L','B','Q','Q','P','M','D','F','C','K','E','A','B']
+]
+# yapf: enable
+
 
 class ArgumentParserTest(unittest.TestCase):
 
@@ -25,7 +46,12 @@ class ArgumentParserTest(unittest.TestCase):
     def test_ArgumentParser_has_a_positional_argument_for_the_input_file(self):
         arguments = self.argument_parser.parse_args([self.sample_puzzle])
         assert 'puzzle_file' in arguments
-        assert arguments.puzzle_file == self.sample_puzzle
+
+    def test_ArgumentParser_opens_the_specified_input_file(self):
+        arguments = self.argument_parser.parse_args([self.sample_puzzle])
+        assert arguments.puzzle_file is not None
+        assert not arguments.puzzle_file.closed
+        arguments.puzzle_file.close()
 
 
 class HelpAndUsageTest(unittest.TestCase):
@@ -47,26 +73,8 @@ class HelpAndUsageTest(unittest.TestCase):
 class PuzzleParserTest(unittest.TestCase):
 
     def test_parse_puzzle_returns_the_list_of_words_and_puzzle(self):
-        words_list = 'BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA'.split(',')
-        # yapf: disable
-        puzzle_matrix = [
-            ['U','M','K','H','U','L','K','I','N','V','J','O','C','W','E'],
-            ['L','L','S','H','K','Z','Z','W','Z','C','G','J','U','Y','G'],
-            ['H','S','U','P','J','P','R','J','D','H','S','B','X','T','G'],
-            ['B','R','J','S','O','E','Q','E','T','I','K','K','G','L','E'],
-            ['A','Y','O','A','G','C','I','R','D','Q','H','R','T','C','D'],
-            ['S','C','O','T','T','Y','K','Z','R','E','P','P','X','P','F'],
-            ['B','L','Q','S','L','N','E','E','E','V','U','L','F','M','Z'],
-            ['O','K','R','I','K','A','M','M','R','M','F','B','A','P','P'],
-            ['N','U','I','I','Y','H','Q','M','E','M','Q','R','Y','F','S'],
-            ['E','Y','Z','Y','G','K','Q','J','P','C','Q','W','Y','A','K'],
-            ['S','J','F','Z','M','Q','I','B','D','B','E','M','K','W','D'],
-            ['T','G','L','B','H','C','B','E','C','H','T','O','Y','I','K'],
-            ['O','J','Y','E','U','L','N','C','C','L','Y','B','Z','U','H'],
-            ['W','Z','M','I','S','U','K','U','R','B','I','D','U','X','S'],
-            ['K','Y','L','B','Q','Q','P','M','D','F','C','K','E','A','B']
-        ]
-        # yapf: enable
+        words_list = PILLAR_SAMPLE_WORD_LIST
+        puzzle_matrix = PILLAR_SAMPLE_PUZZLE_BOARD
         with open('data/pillar-sample.puzzle') as puzzle_file:
             words, puzzle = wordsearch.parse_puzzle(puzzle_file)
         assert words == words_list
@@ -115,3 +123,16 @@ class PuzzleParserTest(unittest.TestCase):
             words, puzzle = wordsearch.parse_puzzle(puzzle_file)
         assert words is None
         assert puzzle == []
+
+
+class ParsePuzzleFromCommandLineArgument(unittest.TestCase):
+    """Tests the integration between the argument parser and puzzle parser."""
+
+    def test_parse_puzzle_from_command_line_argument(self):
+        argument_parser = wordsearch.build_argument_parser()
+        arguments = argument_parser.parse_args(['data/pillar-sample.puzzle'])
+        words, puzzle = wordsearch.parse_puzzle(arguments.puzzle_file)
+        assert words is not None
+        assert words == PILLAR_SAMPLE_WORD_LIST
+        assert puzzle != []
+        assert puzzle == PILLAR_SAMPLE_PUZZLE_BOARD
