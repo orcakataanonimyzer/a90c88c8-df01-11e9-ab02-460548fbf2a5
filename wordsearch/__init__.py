@@ -14,6 +14,7 @@ import argparse
 
 __version__ = '0.1.0'
 
+
 def parse_puzzle(puzzle_file):
     """Parses a puzzle file, producing a list of words and puzzle board.
 
@@ -68,6 +69,7 @@ def parse_puzzle(puzzle_file):
         else:
             puzzle.append(line)
     return words, puzzle
+
 
 def build_argument_parser():
     """Constructs and configures an :obj:`argparse.ArgumentParser`.

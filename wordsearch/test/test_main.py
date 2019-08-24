@@ -43,10 +43,12 @@ class HelpAndUsageTest(unittest.TestCase):
         content = 'puzzle_file  The input puzzle file to solve.'
         assert content in self.stdout
 
+
 class PuzzleParserTest(unittest.TestCase):
 
     def test_parse_puzzle_returns_the_list_of_words_and_puzzle(self):
         words_list = 'BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA'.split(',')
+        # yapf: disable
         puzzle_matrix = [
             ['U','M','K','H','U','L','K','I','N','V','J','O','C','W','E'],
             ['L','L','S','H','K','Z','Z','W','Z','C','G','J','U','Y','G'],
@@ -64,12 +66,14 @@ class PuzzleParserTest(unittest.TestCase):
             ['W','Z','M','I','S','U','K','U','R','B','I','D','U','X','S'],
             ['K','Y','L','B','Q','Q','P','M','D','F','C','K','E','A','B']
         ]
+        # yapf: enable
         with open('data/pillar-sample.puzzle') as puzzle_file:
             words, puzzle = wordsearch.parse_puzzle(puzzle_file)
         assert words == words_list
         assert puzzle == puzzle_matrix
 
     def test_parse_puzzle_returns_the_puzzle_contained_in_the_input_file(self):
+        # yapf: disable
         puzzle_matrix = [
             ['M','R','P','P','O','N','E','P','Y','T','H','O','N','C','J'],
             ['X','X','D','W','R','R','N','G','S','U','X','Q','D','Q','P'],
@@ -87,21 +91,15 @@ class PuzzleParserTest(unittest.TestCase):
             ['F','R','Y','O','J','V','T','K','X','Z','G','N','H','B','O'],
             ['A','O','G','K','U','P','F','Q','A','M','Y','L','W','I','M']
         ]
+        # yapf: enable
         with open('data/sample-puzzle.puzzle') as puzzle_file:
             words, puzzle = wordsearch.parse_puzzle(puzzle_file)
         assert puzzle == puzzle_matrix
 
     def test_parse_puzzle_returns_the_word_list_in_the_input_file(self):
         word_list = [
-            'LANGUAGE',
-            'PROGRAMMING',
-            'PUZZLE',
-            'PYTHON',
-            'SEARCH',
-            'SOLVER',
-            'THE',
-            'WORD',
-            'WRITTEN'
+            'LANGUAGE', 'PROGRAMMING', 'PUZZLE', 'PYTHON', 'SEARCH', 'SOLVER',
+            'THE', 'WORD', 'WRITTEN'
         ]
         with open('data/sample-puzzle.puzzle') as puzzle_file:
             words, puzzle = wordsearch.parse_puzzle(puzzle_file)
