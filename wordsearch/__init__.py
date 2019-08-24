@@ -18,6 +18,9 @@ def build_argument_parser():
     argument_parser = argparse.ArgumentParser(
         prog='wordsearch',
         description='Solves word search puzzles.')
+    argument_parser.add_argument(
+        'puzzle_file',
+        help='The input puzzle file to solve.')
     return argument_parser
 
 def main(argv=None):
