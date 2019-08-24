@@ -1,0 +1,2 @@
+import wordsearch
+wordsearch.main()
