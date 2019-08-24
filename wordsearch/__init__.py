@@ -15,6 +15,14 @@ import argparse
 __version__ = '0.1.0'
 
 def build_argument_parser():
+    """Constructs and configures an :obj:`argparse.ArgumentParser`.
+
+    The parser is configured with the program name, description, and a
+    positional argument for the input file.
+
+    Returns:
+        A configured instance of :obj:`argparse.ArgumentParser`.
+    """
     argument_parser = argparse.ArgumentParser(
         prog='wordsearch',
         description='Solves word search puzzles.')
