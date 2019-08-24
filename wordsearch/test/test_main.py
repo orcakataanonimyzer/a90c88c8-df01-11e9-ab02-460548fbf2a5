@@ -111,3 +111,9 @@ class PuzzleParserTest(unittest.TestCase):
         with pytest.raises(ValueError) as e:
             assert wordsearch.parse_puzzle(None)
         assert str(e.value) == 'Invalid argument: puzzle_file must not be None.'
+
+    def test_parse_puzzle_returns_none_and_empty_list_if_puzzle_is_empty(self):
+        with open('data/empty.puzzle') as puzzle_file:
+            words, puzzle = wordsearch.parse_puzzle(puzzle_file)
+        assert words is None
+        assert puzzle == []
