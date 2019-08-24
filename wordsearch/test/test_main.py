@@ -67,3 +67,42 @@ class PuzzleParserTest(unittest.TestCase):
             words, puzzle = wordsearch.parse_puzzle(puzzle_file)
         assert words == words_list
         assert puzzle == puzzle_matrix
+
+    def test_parse_puzzle_returns_the_puzzle_contained_in_the_input_file(self):
+        puzzle_matrix = [
+            ['M','R','P','P','O','N','E','P','Y','T','H','O','N','C','J'],
+            ['X','X','D','W','R','R','N','G','S','U','X','Q','D','Q','P'],
+            ['C','L','A','V','L','M','W','P','A','E','Z','B','E','G','T'],
+            ['F','O','E','J','S','F','Y','Z','E','U','A','E','D','M','Y'],
+            ['H','T','Y','X','S','Y','F','P','S','P','G','R','S','T','M'],
+            ['G','N','I','M','M','A','R','G','O','R','P','N','C','H','S'],
+            ['Z','R','K','L','K','E','O','O','L','Z','L','E','A','H','A'],
+            ['E','H','T','V','L','I','E','T','V','B','P','T','Q','L','T'],
+            ['A','D','D','Z','G','W','Y','W','E','S','Y','T','N','U','F'],
+            ['X','Q','Z','W','W','Z','T','Q','R','J','H','I','P','W','N'],
+            ['M','U','O','H','K','L','G','K','Z','H','J','R','P','F','N'],
+            ['P','R','I','C','Z','R','N','K','G','H','R','W','L','Z','V'],
+            ['D','E','S','F','J','C','T','T','X','G','D','P','Q','J','F'],
+            ['F','R','Y','O','J','V','T','K','X','Z','G','N','H','B','O'],
+            ['A','O','G','K','U','P','F','Q','A','M','Y','L','W','I','M']
+        ]
+        with open('data/sample-puzzle.puzzle') as puzzle_file:
+            words, puzzle = wordsearch.parse_puzzle(puzzle_file)
+        assert puzzle == puzzle_matrix
+
+    def test_parse_puzzle_returns_the_word_list_in_the_input_file(self):
+        word_list = [
+            'LANGUAGE',
+            'PROGRAMMING',
+            'PUZZLE',
+            'PYTHON',
+            'SEARCH',
+            'SOLVER',
+            'THE',
+            'WORD',
+            'WRITTEN'
+        ]
+        with open('data/sample-puzzle.puzzle') as puzzle_file:
+            words, puzzle = wordsearch.parse_puzzle(puzzle_file)
+        assert words == word_list
+
