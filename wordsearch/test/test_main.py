@@ -13,6 +13,11 @@ class ArgumentParserTest(unittest.TestCase):
         argument_parser = wordsearch.build_argument_parser()
         assert argument_parser.prog == 'wordsearch'
 
+    def test_ArgumentParser_contains_a_description(self):
+        argument_parser = wordsearch.build_argument_parser()
+        assert argument_parser.description is not None
+        assert argument_parser.description != ''
+
 class SampleTest(unittest.TestCase):
 
     def test_main(self):

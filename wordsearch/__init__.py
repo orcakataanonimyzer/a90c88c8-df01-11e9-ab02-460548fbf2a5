@@ -15,7 +15,9 @@ import argparse
 __version__ = '0.1.0'
 
 def build_argument_parser():
-    argument_parser = argparse.ArgumentParser(prog='wordsearch')
+    argument_parser = argparse.ArgumentParser(
+        prog='wordsearch',
+        description='Solves word search puzzles.')
     return argument_parser
 
 def main(argv=None):
