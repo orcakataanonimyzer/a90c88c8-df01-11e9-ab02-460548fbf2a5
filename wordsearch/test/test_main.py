@@ -3,6 +3,7 @@ import argparse
 import subprocess
 import wordsearch
 
+
 class ArgumentParserTest(unittest.TestCase):
 
     def setup_method(self, method):
@@ -25,12 +26,12 @@ class ArgumentParserTest(unittest.TestCase):
         assert 'puzzle_file' in arguments
         assert arguments.puzzle_file == self.sample_puzzle
 
+
 class HelpAndUsageTest(unittest.TestCase):
 
     def setup_method(self, method):
-        self.process = subprocess.run(
-            'python -m wordsearch -h'.split(),
-            stdout=subprocess.PIPE)
+        self.process = subprocess.run('python -m wordsearch -h'.split(),
+                                      stdout=subprocess.PIPE)
         self.stdout = self.process.stdout.decode()
 
     def test_passing_the_help_flag_prints_the_program_usage(self):
