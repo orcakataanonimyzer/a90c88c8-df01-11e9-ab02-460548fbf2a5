@@ -16,7 +16,7 @@ __version__ = '0.1.0'
 
 def parse_puzzle(puzzle_file):
     if puzzle_file is None:
-        raise ValueError()
+        raise ValueError('Invalid argument: puzzle_file must not be None.')
     words = None
     puzzle = []
     for line in puzzle_file:
