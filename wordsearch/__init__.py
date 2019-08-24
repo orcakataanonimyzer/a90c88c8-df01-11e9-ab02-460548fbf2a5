@@ -15,7 +15,8 @@ import argparse
 __version__ = '0.1.0'
 
 def build_argument_parser():
-    return argparse.ArgumentParser()
+    argument_parser = argparse.ArgumentParser(prog='wordsearch')
+    return argument_parser
 
 def main(argv=None):
     """The main entry point of the program.

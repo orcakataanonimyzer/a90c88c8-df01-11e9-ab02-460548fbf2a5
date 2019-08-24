@@ -9,6 +9,10 @@ class ArgumentParserTest(unittest.TestCase):
         assert argument_parser is not None
         assert isinstance(argument_parser, argparse.ArgumentParser)
 
+    def test_ArgumentParser_contains_a_program_name_called_wordsearch(self):
+        argument_parser = wordsearch.build_argument_parser()
+        assert argument_parser.prog == 'wordsearch'
+
 class SampleTest(unittest.TestCase):
 
     def test_main(self):
