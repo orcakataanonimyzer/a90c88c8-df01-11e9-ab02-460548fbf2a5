@@ -1,5 +1,6 @@
 import unittest
 import argparse
+import subprocess
 import wordsearch
 
 class ArgumentParserTest(unittest.TestCase):
@@ -24,8 +25,18 @@ class ArgumentParserTest(unittest.TestCase):
         assert 'puzzle_file' in arguments
         assert arguments.puzzle_file == self.sample_puzzle
 
-class SampleTest(unittest.TestCase):
+class HelpAndUsageTest(unittest.TestCase):
 
-    def test_main(self):
-        wordsearch.main()
-        assert True
+    def setup_method(self, method):
+        self.process = subprocess.run(
+            'python -m wordsearch -h'.split(),
+            stdout=subprocess.PIPE)
+        self.stdout = self.process.stdout.decode()
+
+    def test_passing_the_help_flag_prints_the_program_usage(self):
+        content = 'usage: wordsearch [-h] puzzle_file'
+        assert content in self.stdout
+
+    def test_the_help_message_has_a_description_for_the_input_file(self):
+        content = 'puzzle_file  The input puzzle file to solve.'
+        assert content in self.stdout

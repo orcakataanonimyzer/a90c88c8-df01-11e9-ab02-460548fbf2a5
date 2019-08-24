@@ -29,6 +29,8 @@ def main(argv=None):
     Args:
         argv (:obj:`list` of :obj:`str`): A list of command line arguments.
     """
+    argument_parser = build_argument_parser()
+    arguments = argument_parser.parse_args()
     print('Hello, world!')
 
 if __name__ == '__main__':
