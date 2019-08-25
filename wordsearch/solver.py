@@ -1,3 +1,13 @@
+RIGHT = (0,1)
+LEFT = (0,-1)
+UP = (-1,0)
+DOWN = (1,0)
+UP_RIGHT = (-1,1)
+DOWN_RIGHT = (1,1)
+UP_LEFT = (-1,-1)
+DOWN_LEFT = (1,-1)
+DIRECTIONS = [RIGHT, LEFT, UP, DOWN, UP_RIGHT, DOWN_RIGHT, UP_LEFT, DOWN_LEFT]
+
 class Puzzle:
 
     def __init__(self, board):
@@ -28,3 +38,14 @@ class Puzzle:
         for y in range(self.height):
             for x in range(self.width):
                 yield (y, x)
+
+    def get_valid_moves(self, position):
+        moves = []
+        for direction in DIRECTIONS:
+            y, x = position
+            dy, dx = direction
+            y += dy
+            x += dx
+            if 0 <= y < self.height and 0 <= x < self.width:
+                moves.append((y,x))
+        return moves

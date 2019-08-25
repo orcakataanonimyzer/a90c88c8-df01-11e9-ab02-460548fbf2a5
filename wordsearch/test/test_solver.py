@@ -1,6 +1,7 @@
 import pytest
 import unittest
 
+import wordsearch.solver
 from wordsearch.solver import Puzzle
 
 class PuzzleTest(unittest.TestCase):
@@ -65,3 +66,17 @@ class PuzzleTest(unittest.TestCase):
         expected = [(0, 0),(0, 1),(0, 2),(0, 3),(1, 0),(1, 1),(1, 2),(1, 3),
                     (2, 0),(2, 1),(2, 2),(2, 3),(3, 0),(3, 1),(3, 2),(3, 3)]
         assert expected == positions
+
+    def test_get_valid_moves_returns_a_list_of_valid_moves(self):
+        current_position = (0,0)
+        moves = self.puzzle.get_valid_moves(current_position)
+        assert wordsearch.solver.RIGHT in moves
+        assert wordsearch.solver.DOWN in moves
+        assert wordsearch.solver.DOWN_RIGHT in moves
+
+    def test_get_valid_moves_does_not_return_invalid_moves(self):
+        current_position = (3,3)
+        moves = self.puzzle.get_valid_moves(current_position)
+        assert wordsearch.solver.RIGHT not in moves
+        assert wordsearch.solver.DOWN not in moves
+        assert wordsearch.solver.DOWN_RIGHT not in moves
