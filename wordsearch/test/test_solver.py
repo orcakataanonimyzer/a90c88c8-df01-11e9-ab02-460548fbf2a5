@@ -80,3 +80,27 @@ class PuzzleTest(unittest.TestCase):
         assert wordsearch.solver.RIGHT not in moves
         assert wordsearch.solver.DOWN not in moves
         assert wordsearch.solver.DOWN_RIGHT not in moves
+
+    def test_get_valid_moves_projects_multiple_spaces(self):
+        current_position = (0,0)
+        moves = self.puzzle.get_valid_moves(current_position, distance=3)
+        assert (0,3) in moves
+        assert (3,0) in moves
+        assert (3,3) in moves
+
+        current_position = (2, 1)
+        moves = self.puzzle.get_valid_moves(current_position, distance=3)
+        assert not moves
+
+        current_position = (2, 1)
+        moves = self.puzzle.get_valid_moves(current_position, distance=2)
+        assert len(moves) == 3
+        assert (0,1) in moves
+        assert (2,3) in moves
+        assert (0,3) in moves
+
+        current_position = (3, 3)
+        moves = self.puzzle.get_valid_moves(current_position, distance=3)
+        assert (0,0) in moves
+        assert (0,3) in moves
+        assert (3,0) in moves

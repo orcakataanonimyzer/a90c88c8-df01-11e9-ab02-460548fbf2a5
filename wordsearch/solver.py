@@ -39,13 +39,13 @@ class Puzzle:
             for x in range(self.width):
                 yield (y, x)
 
-    def get_valid_moves(self, position):
+    def get_valid_moves(self, position, distance=1):
         moves = []
         for direction in DIRECTIONS:
             y, x = position
             dy, dx = direction
-            y += dy
-            x += dx
+            y += dy * distance
+            x += dx * distance
             if 0 <= y < self.height and 0 <= x < self.width:
                 moves.append((y,x))
         return moves
