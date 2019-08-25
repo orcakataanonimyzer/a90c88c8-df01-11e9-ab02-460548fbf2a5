@@ -51,8 +51,14 @@ class PuzzleTest(unittest.TestCase):
             puzzle = Puzzle(board)
         assert str(e.value) == 'board is too small; it must be at least 2x2.'
 
-    def test_size(self):
-        assert (4,4) == self.puzzle.size()
+    def test_size_returns_the_width_and_height_as_a_tuple(self):
+        assert (4,4) == self.puzzle.size
+
+    def test_height_returns_the_height_of_the_board(self):
+        assert 4 == self.puzzle.height
+
+    def test_width_returns_the_width_of_the_board(self):
+        assert 4 == self.puzzle.width
 
     def test_all_positions_is_an_iterator_through_the_entire_board(self):
         positions = [position for position in self.puzzle.all_positions()]

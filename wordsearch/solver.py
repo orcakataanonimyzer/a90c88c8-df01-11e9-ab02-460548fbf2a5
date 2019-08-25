@@ -12,11 +12,19 @@ class Puzzle:
             raise ValueError('board is too small; it must be at least 2x2.')
         self.board = board
 
+    @property
     def size(self):
-        return len(self.board),len(self.board[0])
+        return self.height, self.width
+
+    @property
+    def height(self):
+        return len(self.board)
+
+    @property
+    def width(self):
+        return len(self.board[0])
 
     def all_positions(self):
-        height, width = self.size()
-        for y in range(height):
-            for x in range(width):
+        for y in range(self.height):
+            for x in range(self.width):
                 yield (y, x)
