@@ -89,6 +89,14 @@ class Puzzle:
         return characters, positions
 
     def find(self, word):
+        if word is None:
+            raise ValueError('the specified word is None.')
+        if len(word) > self.width:
+            raise ValueError('the specified word (%s) is larger than the board.' % word)
+        if len(word) < MIN_WORD_SIZE:
+            raise ValueError('the specified word (%s) is too short.' % word)
+        if type(word) is not str:
+            raise TypeError('the specified word is not of type str.')
         for position in self.all_positions():
             for target in self.get_valid_moves(position, distance=len(word)-1):
                 characters, positions = self.get_characters(position, target)

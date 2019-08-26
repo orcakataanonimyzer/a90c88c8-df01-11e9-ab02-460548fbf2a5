@@ -177,6 +177,29 @@ class PuzzleTest(unittest.TestCase):
         assert [(2,3),(1,3),(0,3)] == self.puzzle.find('pig')
         assert [(3,0),(2,1),(1,2)] == self.puzzle.find('cat')
 
+    def test_find_raises_value_error_if_word_is_null(self):
+        with pytest.raises(ValueError) as e:
+            self.puzzle.find(None)
+        assert str(e.value) == 'the specified word is None.'
+
+    def test_find_raises_value_error_when_word_is_larger_than_puzzle(self):
+        word = 'moose'
+        with pytest.raises(ValueError) as e:
+            self.puzzle.find(word)
+        assert str(e.value) == \
+            'the specified word (%s) is larger than the board.' % word
+
+    def test_find_raises_value_error_when_word_is_too_short(self):
+        with pytest.raises(ValueError) as e:
+            self.puzzle.find('d')
+        assert str(e.value) == 'the specified word (%s) is too short.' % 'd'
+
+    def test_find_raises_type_error_if_word_is_not_a_str(self):
+        word = ['c', 'a', 't']
+        with pytest.raises(TypeError) as e:
+            self.puzzle.find(word)
+        assert str(e.value) == 'the specified word is not of type str.'
+
     def test_find_all_returns_an_empty_dict_if_no_words_could_be_found(self):
         assert {} == self.puzzle.find_all(['cow'])
 
