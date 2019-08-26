@@ -12,7 +12,17 @@ Attributes:
 """
 import argparse
 
+from wordsearch.solver import Puzzle
+
 __version__ = '0.1.0'
+
+
+def format_results(results, words):
+    strings = []
+    for word in words:
+        positions = ','.join(['(%s,%s)' % (x, y) for y, x in results[word]])
+        strings.append('%s: %s' % (word, positions))
+    return '\n'.join(strings)
 
 
 def parse_puzzle(puzzle_file):
@@ -92,7 +102,10 @@ def main():
     """The main entry point of the program."""
     argument_parser = build_argument_parser()
     arguments = argument_parser.parse_args()
-    print('Hello, world!')
+    words, board = parse_puzzle(arguments.puzzle_file)
+    arguments.puzzle_file.close()
+    puzzle = Puzzle(board)
+    print(format_results(puzzle.find_all(words), words))
 
 
 if __name__ == '__main__':

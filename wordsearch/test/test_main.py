@@ -3,6 +3,7 @@ import unittest
 import argparse
 import subprocess
 import wordsearch
+from wordsearch.solver import Puzzle
 
 PILLAR_SAMPLE_WORD_LIST = 'BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA'.split(',')
 # yapf: disable
@@ -136,3 +137,82 @@ class ParsePuzzleFromCommandLineArgument(unittest.TestCase):
         assert words == PILLAR_SAMPLE_WORD_LIST
         assert puzzle != []
         assert puzzle == PILLAR_SAMPLE_PUZZLE_BOARD
+
+
+class OutputFormatTest(unittest.TestCase):
+
+    def test_format_results_returns_a_formatted_string(self):
+        results = {
+            'BONES': [(6, 0), (7, 0), (8, 0), (9, 0), (10, 0)],
+            'KHAN': [(9, 5), (8, 5), (7, 5), (6, 5)],
+            'KIRK': [(7, 4), (7, 3), (7, 2), (7, 1)],
+            'SCOTTY': [(5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5)],
+            'SPOCK': [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6)],
+            'SULU': [(3, 3), (2, 2), (1, 1), (0, 0)],
+            'UHURA': [(0, 4), (1, 3), (2, 2), (3, 1), (4, 0)]
+        }
+        words = PILLAR_SAMPLE_WORD_LIST
+        formatted_text = wordsearch.format_results(results, words)
+        # yapf: disable
+        expected = '\n'.join([
+            'BONES: (0,6),(0,7),(0,8),(0,9),(0,10)',
+            'KHAN: (5,9),(5,8),(5,7),(5,6)',
+            'KIRK: (4,7),(3,7),(2,7),(1,7)',
+            'SCOTTY: (0,5),(1,5),(2,5),(3,5),(4,5),(5,5)',
+            'SPOCK: (2,1),(3,2),(4,3),(5,4),(6,5)',
+            'SULU: (3,3),(2,2),(1,1),(0,0)',
+            'UHURA: (4,0),(3,1),(2,2),(1,3),(0,4)'
+        ])
+        # yapf: enable
+        assert expected == formatted_text
+
+
+class SolverIntegrationTest(unittest.TestCase):
+    """Test the integration between the main application and the solver module.
+    """
+
+    def setup_method(self, method):
+        self.puzzle_file = open('./data/pillar-sample.puzzle')
+        self.words, self.board = wordsearch.parse_puzzle(self.puzzle_file)
+        self.puzzle = Puzzle(self.board)
+
+    def teardown_method(self, method):
+        self.puzzle_file.close()
+
+    def test_can_load_a_file_and_solve_the_puzzle(self):
+        actual = self.puzzle.find_all(self.words)
+        expected = {
+            'BONES': [(6, 0), (7, 0), (8, 0), (9, 0), (10, 0)],
+            'KHAN': [(9, 5), (8, 5), (7, 5), (6, 5)],
+            'KIRK': [(7, 4), (7, 3), (7, 2), (7, 1)],
+            'SCOTTY': [(5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5)],
+            'SPOCK': [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6)],
+            'SULU': [(3, 3), (2, 2), (1, 1), (0, 0)],
+            'UHURA': [(0, 4), (1, 3), (2, 2), (3, 1), (4, 0)]
+        }
+        assert expected == actual
+
+
+class WordsearchEndToEndTest(unittest.TestCase):
+    """Tests the entire application end-to-end."""
+
+    def setup_method(self, method):
+        self.path = './data/pillar-sample.puzzle'
+        self.command = 'python -m wordsearch %s' % self.path
+        self.process = subprocess.run(self.command.split(),
+                                      stdout=subprocess.PIPE)
+        self.stdout = self.process.stdout.decode()
+
+    def test_wordsearch_solves_the_input_puzzle_file(self):
+        # yapf: disable
+        expected = '\n'.join([
+            'BONES: (0,6),(0,7),(0,8),(0,9),(0,10)',
+            'KHAN: (5,9),(5,8),(5,7),(5,6)',
+            'KIRK: (4,7),(3,7),(2,7),(1,7)',
+            'SCOTTY: (0,5),(1,5),(2,5),(3,5),(4,5),(5,5)',
+            'SPOCK: (2,1),(3,2),(4,3),(5,4),(6,5)',
+            'SULU: (3,3),(2,2),(1,1),(0,0)',
+            'UHURA: (4,0),(3,1),(2,2),(1,3),(0,4)'
+        ])
+        # yapf: enable
+        assert expected in self.stdout
