@@ -111,3 +111,23 @@ class PuzzleTest(unittest.TestCase):
 
         direction = self.puzzle.get_direction((0,0), (1,1))
         assert wordsearch.solver.DOWN_RIGHT == direction
+
+    def test_get_characters_returns_characters_in_the_given_range(self):
+        characters, positions = self.puzzle.get_characters((0,1), (0,3))
+        assert 'dog' == ''.join(characters)
+
+        characters, positions = self.puzzle.get_characters((2,3), (0,3))
+        assert 'pig' == ''.join(characters)
+
+        characters, positions = self.puzzle.get_characters((3,0), (1,2))
+        assert 'cat' == ''.join(characters)
+
+    def test_get_characters_returns_the_positions_in_the_given_range(self):
+        characters, positions = self.puzzle.get_characters((0,1), (0,3))
+        assert [(0,1),(0,2),(0,3)] == positions
+
+        characters, positions = self.puzzle.get_characters((2,3), (0,3))
+        assert [(2,3),(1,3),(0,3)] == positions
+
+        characters, positions = self.puzzle.get_characters((3,0), (1,2))
+        assert [(3,0),(2,1),(1,2)] == positions

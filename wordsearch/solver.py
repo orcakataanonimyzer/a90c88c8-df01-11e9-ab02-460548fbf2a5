@@ -56,3 +56,20 @@ class Puzzle:
         y = min(1, max(-1, ty - oy))
         x = min(1, max(-1, tx - ox))
         return y,x
+
+    def get_characters(self, position, target):
+        characters = []
+        positions = []
+        direction = self.get_direction(position, target)
+        while position != target:
+            y, x = position
+            characters.append(self.board[y][x])
+            positions.append(position)
+            y += direction[0]
+            x += direction[1]
+            position = y, x
+        y, x = position
+        characters.append(self.board[y][x])
+        positions.append(position)
+        return characters, positions
+
