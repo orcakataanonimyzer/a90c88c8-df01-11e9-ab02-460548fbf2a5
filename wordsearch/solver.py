@@ -1,13 +1,14 @@
-RIGHT = (0,1)
-LEFT = (0,-1)
-UP = (-1,0)
-DOWN = (1,0)
-UP_RIGHT = (-1,1)
-DOWN_RIGHT = (1,1)
-UP_LEFT = (-1,-1)
-DOWN_LEFT = (1,-1)
+RIGHT = (0, 1)
+LEFT = (0, -1)
+UP = (-1, 0)
+DOWN = (1, 0)
+UP_RIGHT = (-1, 1)
+DOWN_RIGHT = (1, 1)
+UP_LEFT = (-1, -1)
+DOWN_LEFT = (1, -1)
 DIRECTIONS = [RIGHT, LEFT, UP, DOWN, UP_RIGHT, DOWN_RIGHT, UP_LEFT, DOWN_LEFT]
 MIN_WORD_SIZE = 2
+
 
 class Puzzle:
 
@@ -56,7 +57,7 @@ class Puzzle:
             y += dy * distance
             x += dx * distance
             if self.position_is_valid((y, x)):
-                moves.append((y,x))
+                moves.append((y, x))
         return moves
 
     def get_direction(self, origin, target):
@@ -66,7 +67,7 @@ class Puzzle:
         ty, tx = target
         y = min(1, max(-1, ty - oy))
         x = min(1, max(-1, tx - ox))
-        return y,x
+        return y, x
 
     def get_characters(self, position, target):
         if not self.position_is_valid(position):
@@ -92,13 +93,15 @@ class Puzzle:
         if word is None:
             raise ValueError('the specified word is None.')
         if len(word) > self.width:
-            raise ValueError('the specified word (%s) is larger than the board.' % word)
+            raise ValueError(
+                'the specified word (%s) is larger than the board.' % word)
         if len(word) < MIN_WORD_SIZE:
             raise ValueError('the specified word (%s) is too short.' % word)
         if type(word) is not str:
             raise TypeError('the specified word is not of type str.')
         for position in self.all_positions():
-            for target in self.get_valid_moves(position, distance=len(word)-1):
+            for target in self.get_valid_moves(position,
+                                               distance=len(word) - 1):
                 characters, positions = self.get_characters(position, target)
                 if characters == list(word):
                     return positions
@@ -108,7 +111,8 @@ class Puzzle:
         if words is None:
             raise ValueError('the specified list of words is None.')
         if type(words) is not list:
-            raise TypeError('expected words to be of type list, but got (%s)' % type(words))
+            raise TypeError('expected words to be of type list, but got (%s)' %
+                            type(words))
         results = {}
         for word in words:
             positions = self.find(word)
