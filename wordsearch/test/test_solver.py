@@ -134,6 +134,9 @@ class PuzzleTest(unittest.TestCase):
         direction = self.puzzle.get_direction((0,0), (1,1))
         assert wordsearch.solver.DOWN_RIGHT == direction
 
+    def test_get_direction_returns_zero_zero_if_target_is_origin(self):
+        assert (0,0) == self.puzzle.get_direction((2,2),(2,2))
+
     def test_get_direction_raises_error_if_origin_is_out_of_bounds(self):
         with pytest.raises(IndexError) as e:
             self.puzzle.get_direction((-1, 0), (2,2))
