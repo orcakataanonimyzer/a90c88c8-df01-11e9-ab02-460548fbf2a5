@@ -131,3 +131,11 @@ class PuzzleTest(unittest.TestCase):
 
         characters, positions = self.puzzle.get_characters((3,0), (1,2))
         assert [(3,0),(2,1),(1,2)] == positions
+
+    def test_find_returns_an_empty_list_if_the_word_cannot_be_found(self):
+        assert [] == self.puzzle.find('cow')
+
+    def test_find_returns_the_positions_of_the_characters_in_the_word(self):
+        assert [(0,1),(0,2),(0,3)] == self.puzzle.find('dog')
+        assert [(2,3),(1,3),(0,3)] == self.puzzle.find('pig')
+        assert [(3,0),(2,1),(1,2)] == self.puzzle.find('cat')

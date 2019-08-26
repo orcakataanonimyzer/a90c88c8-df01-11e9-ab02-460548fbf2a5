@@ -73,3 +73,10 @@ class Puzzle:
         positions.append(position)
         return characters, positions
 
+    def find(self, word):
+        for position in self.all_positions():
+            for target in self.get_valid_moves(position, distance=len(word)-1):
+                characters, positions = self.get_characters(position, target)
+                if characters == list(word):
+                    return positions
+        return []
