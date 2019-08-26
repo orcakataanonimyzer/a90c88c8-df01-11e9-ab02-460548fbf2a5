@@ -14,6 +14,12 @@ import argparse
 
 __version__ = '0.1.0'
 
+def format_results(results, words):
+    strings = []
+    for word in words:
+        positions = ','.join(['(%s,%s)' % (x,y) for y,x in results[word]])
+        strings.append('%s: %s' % (word, positions))
+    return '\n'.join(strings)
 
 def parse_puzzle(puzzle_file):
     """Parses a puzzle file, producing a list of words and puzzle board.
