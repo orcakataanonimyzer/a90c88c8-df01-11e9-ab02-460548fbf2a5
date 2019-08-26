@@ -105,6 +105,11 @@ class PuzzleTest(unittest.TestCase):
         assert (0,3) in moves
         assert (3,0) in moves
 
+    def test_get_valid_moves_raises_error_if_distance_is_zero_or_negative(self):
+        with pytest.raises(ValueError) as e:
+            self.puzzle.get_valid_moves((0,0), distance=-1)
+        assert str(e.value) == 'distance must be at least 1.'
+
     def test_get_valid_moves_raises_error_if_position_is_out_of_bounds(self):
         with pytest.raises(IndexError) as e:
             self.puzzle.get_valid_moves((-1,0), distance=1)

@@ -45,6 +45,8 @@ class Puzzle:
                 yield (y, x)
 
     def get_valid_moves(self, position, distance=1):
+        if distance < 1:
+            raise ValueError('distance must be at least 1.')
         if not self.position_is_valid(position):
             raise IndexError('starting position out of bounds.')
         moves = []
