@@ -7,6 +7,7 @@ DOWN_RIGHT = (1,1)
 UP_LEFT = (-1,-1)
 DOWN_LEFT = (1,-1)
 DIRECTIONS = [RIGHT, LEFT, UP, DOWN, UP_RIGHT, DOWN_RIGHT, UP_LEFT, DOWN_LEFT]
+MIN_WORD_SIZE = 2
 
 class Puzzle:
 
@@ -18,7 +19,7 @@ class Puzzle:
         for row in board:
             if len(row) != len(board):
                 raise ValueError('board is not square.')
-        if len(board) < 2:
+        if len(board) < MIN_WORD_SIZE:
             raise ValueError('board is too small; it must be at least 2x2.')
         self.board = board
 
