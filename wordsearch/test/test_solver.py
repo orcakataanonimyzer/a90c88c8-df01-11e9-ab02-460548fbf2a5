@@ -104,3 +104,10 @@ class PuzzleTest(unittest.TestCase):
         assert (0,0) in moves
         assert (0,3) in moves
         assert (3,0) in moves
+
+    def test_get_direction_returns_the_direction_from_origin_to_target(self):
+        direction = self.puzzle.get_direction((3,0),(0,3))
+        assert wordsearch.solver.UP_RIGHT == direction
+
+        direction = self.puzzle.get_direction((0,0), (1,1))
+        assert wordsearch.solver.DOWN_RIGHT == direction

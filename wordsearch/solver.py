@@ -49,3 +49,10 @@ class Puzzle:
             if 0 <= y < self.height and 0 <= x < self.width:
                 moves.append((y,x))
         return moves
+
+    def get_direction(self, origin, target):
+        oy, ox = origin
+        ty, tx = target
+        y = min(1, max(-1, ty - oy))
+        x = min(1, max(-1, tx - ox))
+        return y,x
