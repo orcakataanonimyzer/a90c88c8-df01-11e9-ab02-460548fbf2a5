@@ -6,3 +6,6 @@ init:
 
 test:
 	python -m pytest --cov=wordsearch
+
+tidy:
+	python -m yapf --recursive --in-place --style google wordsearch
