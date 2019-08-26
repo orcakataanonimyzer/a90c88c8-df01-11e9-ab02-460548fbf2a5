@@ -105,6 +105,10 @@ class Puzzle:
         return []
 
     def find_all(self, words):
+        if words is None:
+            raise ValueError('the specified list of words is None.')
+        if type(words) is not list:
+            raise TypeError('expected words to be of type list, but got (%s)' % type(words))
         results = {}
         for word in words:
             positions = self.find(word)

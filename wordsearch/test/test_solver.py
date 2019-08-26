@@ -211,3 +211,14 @@ class PuzzleTest(unittest.TestCase):
             'pig': [(2,3),(1,3),(0,3)]
         }
         assert expected == self.puzzle.find_all(words)
+
+    def test_find_all_raises_value_error_when_words_is_null(self):
+        with pytest.raises(ValueError) as e:
+            self.puzzle.find_all(None)
+        assert str(e.value) == 'the specified list of words is None.'
+
+    def test_find_all_raises_type_error_if_words_is_not_a_list(self):
+        words = ('cat', 'dog', 'pig')
+        with pytest.raises(TypeError) as e:
+            self.puzzle.find_all(words)
+        assert str(e.value) == 'expected words to be of type list, but got (%s)' % type(words)
