@@ -80,3 +80,11 @@ class Puzzle:
                 if characters == list(word):
                     return positions
         return []
+
+    def find_all(self, words):
+        results = {}
+        for word in words:
+            positions = self.find(word)
+            if positions:
+                results[word] = positions
+        return results

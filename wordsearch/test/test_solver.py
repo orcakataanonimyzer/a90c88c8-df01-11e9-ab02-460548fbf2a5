@@ -139,3 +139,15 @@ class PuzzleTest(unittest.TestCase):
         assert [(0,1),(0,2),(0,3)] == self.puzzle.find('dog')
         assert [(2,3),(1,3),(0,3)] == self.puzzle.find('pig')
         assert [(3,0),(2,1),(1,2)] == self.puzzle.find('cat')
+
+    def test_find_all_returns_an_empty_dict_if_no_words_could_be_found(self):
+        assert {} == self.puzzle.find_all(['cow'])
+
+    def test_find_all_retuns_a_dict_with_the_positions_of_each_word(self):
+        words = ['dog', 'cat', 'pig']
+        expected = {
+            'dog': [(0,1),(0,2),(0,3)],
+            'cat': [(3,0),(2,1),(1,2)],
+            'pig': [(2,3),(1,3),(0,3)]
+        }
+        assert expected == self.puzzle.find_all(words)
