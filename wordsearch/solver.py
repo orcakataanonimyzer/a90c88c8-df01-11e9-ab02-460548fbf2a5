@@ -35,23 +35,31 @@ class Puzzle:
     def width(self):
         return len(self.board[0])
 
+    def position_is_valid(self, position):
+        y, x = position
+        return 0 <= y < self.height and 0 <= x < self.width
+
     def all_positions(self):
         for y in range(self.height):
             for x in range(self.width):
                 yield (y, x)
 
     def get_valid_moves(self, position, distance=1):
+        if not self.position_is_valid(position):
+            raise IndexError('starting position out of bounds.')
         moves = []
         for direction in DIRECTIONS:
             y, x = position
             dy, dx = direction
             y += dy * distance
             x += dx * distance
-            if 0 <= y < self.height and 0 <= x < self.width:
+            if self.position_is_valid((y, x)):
                 moves.append((y,x))
         return moves
 
     def get_direction(self, origin, target):
+        if not self.position_is_valid(origin):
+            raise IndexError('origin is out of bounds.')
         oy, ox = origin
         ty, tx = target
         y = min(1, max(-1, ty - oy))
@@ -59,6 +67,10 @@ class Puzzle:
         return y,x
 
     def get_characters(self, position, target):
+        if not self.position_is_valid(position):
+            raise IndexError('starting position out of bounds.')
+        if not self.position_is_valid(target):
+            raise IndexError('target position out of bounds.')
         characters = []
         positions = []
         direction = self.get_direction(position, target)

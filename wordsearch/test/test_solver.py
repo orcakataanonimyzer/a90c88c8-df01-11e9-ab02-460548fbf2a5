@@ -105,12 +105,34 @@ class PuzzleTest(unittest.TestCase):
         assert (0,3) in moves
         assert (3,0) in moves
 
+    def test_get_valid_moves_raises_error_if_position_is_out_of_bounds(self):
+        with pytest.raises(IndexError) as e:
+            self.puzzle.get_valid_moves((-1,0), distance=1)
+        assert str(e.value) == 'starting position out of bounds.'
+
+        with pytest.raises(IndexError) as e:
+            self.puzzle.get_valid_moves((0,-1), distance=1)
+        assert str(e.value) == 'starting position out of bounds.'
+
+        with pytest.raises(IndexError) as e:
+            self.puzzle.get_valid_moves((4,3), distance=1)
+        assert str(e.value) == 'starting position out of bounds.'
+
+        with pytest.raises(IndexError) as e:
+            self.puzzle.get_valid_moves((3,4), distance=1)
+        assert str(e.value) == 'starting position out of bounds.'
+
     def test_get_direction_returns_the_direction_from_origin_to_target(self):
         direction = self.puzzle.get_direction((3,0),(0,3))
         assert wordsearch.solver.UP_RIGHT == direction
 
         direction = self.puzzle.get_direction((0,0), (1,1))
         assert wordsearch.solver.DOWN_RIGHT == direction
+
+    def test_get_direction_raises_error_if_origin_is_out_of_bounds(self):
+        with pytest.raises(IndexError) as e:
+            self.puzzle.get_direction((-1, 0), (2,2))
+        assert str(e.value) == 'origin is out of bounds.'
 
     def test_get_characters_returns_characters_in_the_given_range(self):
         characters, positions = self.puzzle.get_characters((0,1), (0,3))
@@ -131,6 +153,16 @@ class PuzzleTest(unittest.TestCase):
 
         characters, positions = self.puzzle.get_characters((3,0), (1,2))
         assert [(3,0),(2,1),(1,2)] == positions
+
+    def test_get_characters_raises_error_if_position_out_of_bounds(self):
+        with pytest.raises(IndexError) as e:
+            self.puzzle.get_characters((-1,0), (2,0))
+        assert str(e.value) == 'starting position out of bounds.'
+
+    def test_get_characters_raises_error_if_target_out_of_bounds(self):
+        with pytest.raises(IndexError) as e:
+            self.puzzle.get_characters((2,0), (-1,0))
+        assert str(e.value) == 'target position out of bounds.'
 
     def test_find_returns_an_empty_list_if_the_word_cannot_be_found(self):
         assert [] == self.puzzle.find('cow')
