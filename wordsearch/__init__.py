@@ -88,12 +88,8 @@ def build_argument_parser():
     return argument_parser
 
 
-def main(argv=None):
-    """The main entry point of the program.
-
-    Args:
-        argv (:obj:`list` of :obj:`str`): A list of command line arguments.
-    """
+def main():
+    """The main entry point of the program."""
     argument_parser = build_argument_parser()
     arguments = argument_parser.parse_args()
     print('Hello, world!')
