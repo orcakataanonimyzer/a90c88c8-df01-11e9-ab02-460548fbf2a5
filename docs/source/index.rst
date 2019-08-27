@@ -17,7 +17,12 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-wordsearch main
-===============
+wordsearch
+==========
 .. automodule:: wordsearch
+    :members:
+
+wordsearch.solver
+=================
+.. automodule:: wordsearch.solver
     :members:
