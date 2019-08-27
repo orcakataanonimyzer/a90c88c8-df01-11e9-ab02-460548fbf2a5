@@ -18,6 +18,27 @@ __version__ = '0.1.0'
 
 
 def format_results(results, words):
+    """Formats the `results` for each word in `words`.
+
+    The results are received as a dict mapping a word to the positions of the
+    characters of that word in the puzzle. The list of words is provided as a
+    second argument to control the order that the results should be printed in.
+
+    This function assumes that the coordinates of each character are in the form
+    (y,x) and will reverse them accordingly so they are output as a typical
+    (x,y) coordinate pair.
+
+    Args:
+        results (dict): A :obj:`dict` containing the results of a solved word
+            search puzzle.
+        words (list): A :obj:`list` of :obj:`str` containing the list of words
+            that exist in the results.
+
+    Returns:
+        A formatted :obj:`str` with each word and position of each character in
+        the word as a pair of indices (x,y) where x is the column and y is the
+        row where the character was found.
+    """
     strings = []
     for word in words:
         positions = ','.join(['(%s,%s)' % (x, y) for y, x in results[word]])
