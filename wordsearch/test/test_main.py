@@ -28,13 +28,18 @@ PILLAR_SAMPLE_PUZZLE_BOARD = [
 # pylint: enable=bad-whitespace
 # yapf: enable
 
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, no-self-use, attribute-defined-outside-init
 # Test methods tend to get really long, which causes the linter to complain.
+# Test methods require the self argument, even if it isn't being used.
+# Attributes may be defined outside of __init__ because they are defined in the
+# setup_method.
 class ArgumentParserTest(unittest.TestCase):
 
+    # pylint: disable=unused-argument
     def setup_method(self, method):
         self.sample_puzzle = 'data/pillar-sample.puzzle'
         self.argument_parser = wordsearch.build_argument_parser()
+    # pylint: enable=unused-argument
 
     def test_build_argument_parser_returns_an_ArgumentParser(self):
         assert self.argument_parser is not None
@@ -60,10 +65,12 @@ class ArgumentParserTest(unittest.TestCase):
 
 class HelpAndUsageTest(unittest.TestCase):
 
+    # pylint: disable=unused-argument
     def setup_method(self, method):
         self.process = subprocess.run('python -m wordsearch -h'.split(),
                                       stdout=subprocess.PIPE)
         self.stdout = self.process.stdout.decode()
+    # pylint: enable=unused-argument
 
     def test_passing_the_help_flag_prints_the_program_usage(self):
         content = 'usage: wordsearch [-h] puzzle_file'
@@ -176,6 +183,7 @@ class SolverIntegrationTest(unittest.TestCase):
     """Test the integration between the main application and the solver module.
     """
 
+    # pylint: disable=unused-argument
     def setup_method(self, method):
         self.puzzle_file = open('./data/pillar-sample.puzzle')
         self.words, self.board = wordsearch.parse_puzzle(self.puzzle_file)
@@ -183,6 +191,7 @@ class SolverIntegrationTest(unittest.TestCase):
 
     def teardown_method(self, method):
         self.puzzle_file.close()
+    # pylint: enable=unused-argument
 
     def test_can_load_a_file_and_solve_the_puzzle(self):
         actual = self.puzzle.find_all(self.words)
@@ -201,12 +210,14 @@ class SolverIntegrationTest(unittest.TestCase):
 class WordsearchEndToEndTest(unittest.TestCase):
     """Tests the entire application end-to-end."""
 
+    # pylint: disable=unused-argument
     def setup_method(self, method):
         self.path = './data/pillar-sample.puzzle'
         self.command = 'python -m wordsearch %s' % self.path
         self.process = subprocess.run(self.command.split(),
                                       stdout=subprocess.PIPE)
         self.stdout = self.process.stdout.decode()
+    # pylint: enable=unused-argument
 
     def test_wordsearch_solves_the_input_puzzle_file(self):
         # yapf: disable
@@ -222,4 +233,4 @@ class WordsearchEndToEndTest(unittest.TestCase):
         # yapf: enable
         assert expected in self.stdout
 
-# pylint: enable=invalid-name
+# pylint: enable=invalid-name, no-self-use, attribute-defined-outside-init
