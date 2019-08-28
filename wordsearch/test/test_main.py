@@ -1,7 +1,7 @@
-import pytest
 import unittest
 import argparse
 import subprocess
+import pytest
 import wordsearch
 from wordsearch.solver import Puzzle
 
