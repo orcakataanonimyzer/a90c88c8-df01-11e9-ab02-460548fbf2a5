@@ -40,3 +40,14 @@ Or, you could just deactivate the environment:
 ```bash
 deactivate
 ```
+# Documentation
+
+The documentation for this project is written in RST format, and an HTML version
+can be generated based on the docstring in each module, class, method, and 
+function. To generate the documentation, follow these steps:
+```bash
+cd docs
+make html
+```
+Once the documentation generates, open the `build/html/index.html` file in a
+web-browser to view.
