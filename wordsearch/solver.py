@@ -66,7 +66,7 @@ class Puzzle:
     def __init__(self, board):
         if board in [None, [], [[]]]:
             raise ValueError('board is empty.')
-        if type(board) is not list:
+        if not isinstance(board, list):
             raise TypeError('board is not of type list.')
         for row in board:
             if len(row) != len(board):
@@ -100,8 +100,10 @@ class Puzzle:
             position (tuple): A :obj:`tuple` of the form (y, x) or (row, col) to
                 be checked for validity.
         """
+        # pylint: disable=invalid-name
         y, x = position
         return 0 <= y < self.height and 0 <= x < self.width
+        # pylint: enable=invalid-name
 
     def all_positions(self):
         """A generator that yields the positions in the board.
@@ -117,9 +119,11 @@ class Puzzle:
             >>> print([pos for pos in puzzle.all_positions()])
             [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)]
         """
+        # pylint: disable=invalid-name
         for y in range(self.height):
             for x in range(self.width):
                 yield (y, x)
+        # pylint: enable=invalid-name
 
     def get_valid_moves(self, position, distance=1):
         """Gives a list of valid moves from a given ``position`` that are
@@ -149,12 +153,15 @@ class Puzzle:
             raise IndexError('starting position out of bounds.')
         moves = []
         for direction in DIRECTIONS:
+            # pylint: disable=invalid-name
+            # This allows usage of y and x as variable names.
             y, x = position
-            dy, dx = direction
-            y += dy * distance
-            x += dx * distance
+            direction_y, direction_x = direction
+            y += direction_y * distance
+            x += direction_x * distance
             if self.position_is_valid((y, x)):
                 moves.append((y, x))
+            # pylint: enable=invalid-name
         return moves
 
     def get_direction(self, origin, target):
@@ -181,11 +188,11 @@ class Puzzle:
         """
         if not self.position_is_valid(origin):
             raise IndexError('origin is out of bounds.')
-        oy, ox = origin
-        ty, tx = target
-        y = min(1, max(-1, ty - oy))
-        x = min(1, max(-1, tx - ox))
-        return y, x
+        origin_y, origin_x = origin
+        target_y, target_x = target
+        direction_y = min(1, max(-1, target_y - origin_y))
+        direction_x = min(1, max(-1, target_x - origin_x))
+        return direction_y, direction_x
 
     def get_characters(self, position, target):
         """Retrieves the characters from the board that fall between the indices
@@ -219,6 +226,7 @@ class Puzzle:
         characters = []
         positions = []
         direction = self.get_direction(position, target)
+        # pylint: disable=invalid-name
         while position != target:
             y, x = position
             characters.append(self.board[y][x])
@@ -228,6 +236,7 @@ class Puzzle:
             position = y, x
         y, x = position
         characters.append(self.board[y][x])
+        # pylint: enable=invalid-name
         positions.append(position)
         return characters, positions
 
@@ -254,7 +263,7 @@ class Puzzle:
                 'the specified word (%s) is larger than the board.' % word)
         if len(word) < MIN_WORD_SIZE:
             raise ValueError('the specified word (%s) is too short.' % word)
-        if type(word) is not str:
+        if not isinstance(word, str):
             raise TypeError('the specified word is not of type str.')
         for position in self.all_positions():
             for target in self.get_valid_moves(position,
@@ -282,7 +291,7 @@ class Puzzle:
         """
         if words is None:
             raise ValueError('the specified list of words is None.')
-        if type(words) is not list:
+        if not isinstance(words, list):
             raise TypeError('expected words to be of type list, but got (%s)' %
                             type(words))
         results = {}

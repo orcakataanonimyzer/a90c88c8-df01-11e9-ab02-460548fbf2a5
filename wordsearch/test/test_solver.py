@@ -1,12 +1,19 @@
-import pytest
 import unittest
+import pytest
 
 import wordsearch.solver
 from wordsearch.solver import Puzzle
 
 
+# pylint: disable=invalid-name, no-self-use, attribute-defined-outside-init
+# pylint: disable=too-many-public-methods
+# Test methods tend to get really long, which causes the linter to complain.
+# Test methods require the self argument, even if it isn't being used.
+# Attributes may be defined outside of __init__ because they are defined in the
+# setup_method.
 class PuzzleTest(unittest.TestCase):
 
+    # pylint: disable=unused-argument
     def setup_method(self, method):
         # Word list: dog, cat, pig
         # yapf: disable
@@ -18,25 +25,26 @@ class PuzzleTest(unittest.TestCase):
         ]
         # yapf: enable
         self.puzzle = Puzzle(self.board)
+    # pylint: enable=unused-argument
 
     def test_raises_an_exception_if_the_board_is_null(self):
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle(None)
+            _ = Puzzle(None)
         assert str(e.value) == 'board is empty.'
 
     def test_raises_an_exception_if_the_board_is_an_empty_list(self):
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle([])
+            _ = Puzzle([])
         assert str(e.value) == 'board is empty.'
 
     def test_raises_an_exception_if_the_board_is_empty(self):
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle([[]])
+            _ = Puzzle([[]])
         assert str(e.value) == 'board is empty.'
 
     def test_raises_an_exception_if_board_is_not_a_list(self):
         with pytest.raises(TypeError) as e:
-            puzzle = Puzzle({})
+            _ = Puzzle({})
         assert str(e.value) == 'board is not of type list.'
 
     def test_raises_an_exception_if_the_board_is_not_square(self):
@@ -48,23 +56,23 @@ class PuzzleTest(unittest.TestCase):
         ]
         # yapf: enable
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle(board)
+            _ = Puzzle(board)
         assert str(e.value) == 'board is not square.'
 
     def test_raises_an_exception_if_the_board_is_not_at_least_2x2(self):
         board = [['a']]
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle(board)
+            _ = Puzzle(board)
         assert str(e.value) == 'board is too small; it must be at least 2x2.'
 
     def test_size_returns_the_width_and_height_as_a_tuple(self):
         assert (4, 4) == self.puzzle.size
 
     def test_height_returns_the_height_of_the_board(self):
-        assert 4 == self.puzzle.height
+        assert self.puzzle.height == 4
 
     def test_width_returns_the_width_of_the_board(self):
-        assert 4 == self.puzzle.width
+        assert self.puzzle.width == 4
 
     def test_all_positions_is_an_iterator_through_the_entire_board(self):
         positions = [position for position in self.puzzle.all_positions()]
@@ -149,23 +157,23 @@ class PuzzleTest(unittest.TestCase):
         assert str(e.value) == 'origin is out of bounds.'
 
     def test_get_characters_returns_characters_in_the_given_range(self):
-        characters, positions = self.puzzle.get_characters((0, 1), (0, 3))
-        assert 'dog' == ''.join(characters)
+        characters, _ = self.puzzle.get_characters((0, 1), (0, 3))
+        assert ''.join(characters) == 'dog'
 
-        characters, positions = self.puzzle.get_characters((2, 3), (0, 3))
-        assert 'pig' == ''.join(characters)
+        characters, _ = self.puzzle.get_characters((2, 3), (0, 3))
+        assert ''.join(characters) == 'pig'
 
-        characters, positions = self.puzzle.get_characters((3, 0), (1, 2))
-        assert 'cat' == ''.join(characters)
+        characters, _ = self.puzzle.get_characters((3, 0), (1, 2))
+        assert ''.join(characters) == 'cat'
 
     def test_get_characters_returns_the_positions_in_the_given_range(self):
-        characters, positions = self.puzzle.get_characters((0, 1), (0, 3))
+        _, positions = self.puzzle.get_characters((0, 1), (0, 3))
         assert [(0, 1), (0, 2), (0, 3)] == positions
 
-        characters, positions = self.puzzle.get_characters((2, 3), (0, 3))
+        _, positions = self.puzzle.get_characters((2, 3), (0, 3))
         assert [(2, 3), (1, 3), (0, 3)] == positions
 
-        characters, positions = self.puzzle.get_characters((3, 0), (1, 2))
+        _, positions = self.puzzle.get_characters((3, 0), (1, 2))
         assert [(3, 0), (2, 1), (1, 2)] == positions
 
     def test_get_characters_raises_error_if_position_out_of_bounds(self):
@@ -232,3 +240,5 @@ class PuzzleTest(unittest.TestCase):
             self.puzzle.find_all(words)
         assert str(e.value) == \
             'expected words to be of type list, but got (%s)' % type(words)
+# pylint: enable=too-many-public-methods
+# pylint: enable=invalid-name, no-self-use, attribute-defined-outside-init,
