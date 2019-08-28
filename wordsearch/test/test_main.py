@@ -114,7 +114,7 @@ class PuzzleParserTest(unittest.TestCase):
         # pylint: enable=bad-whitespace
         # yapf: enable
         with open('data/sample-puzzle.puzzle') as puzzle_file:
-            words, puzzle = wordsearch.parse_puzzle(puzzle_file)
+            _, puzzle = wordsearch.parse_puzzle(puzzle_file)
         assert puzzle == puzzle_matrix
 
     def test_parse_puzzle_returns_the_word_list_in_the_input_file(self):
@@ -123,7 +123,7 @@ class PuzzleParserTest(unittest.TestCase):
             'THE', 'WORD', 'WRITTEN'
         ]
         with open('data/sample-puzzle.puzzle') as puzzle_file:
-            words, puzzle = wordsearch.parse_puzzle(puzzle_file)
+            words, _ = wordsearch.parse_puzzle(puzzle_file)
         assert words == word_list
 
     def test_parse_puzzle_raises_value_error_if_puzzle_file_is_null(self):
