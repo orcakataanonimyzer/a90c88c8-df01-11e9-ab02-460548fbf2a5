@@ -7,6 +7,7 @@ from wordsearch.solver import Puzzle
 
 PILLAR_SAMPLE_WORD_LIST = 'BONES,KHAN,KIRK,SCOTTY,SPOCK,SULU,UHURA'.split(',')
 # yapf: disable
+# pylint: disable=bad-whitespace
 PILLAR_SAMPLE_PUZZLE_BOARD = [
     ['U','M','K','H','U','L','K','I','N','V','J','O','C','W','E'],
     ['L','L','S','H','K','Z','Z','W','Z','C','G','J','U','Y','G'],
@@ -24,6 +25,7 @@ PILLAR_SAMPLE_PUZZLE_BOARD = [
     ['W','Z','M','I','S','U','K','U','R','B','I','D','U','X','S'],
     ['K','Y','L','B','Q','Q','P','M','D','F','C','K','E','A','B']
 ]
+# pylint: enable=bad-whitespace
 # yapf: enable
 
 
@@ -83,6 +85,7 @@ class PuzzleParserTest(unittest.TestCase):
 
     def test_parse_puzzle_returns_the_puzzle_contained_in_the_input_file(self):
         # yapf: disable
+        # pylint: disable=bad-whitespace
         puzzle_matrix = [
             ['M','R','P','P','O','N','E','P','Y','T','H','O','N','C','J'],
             ['X','X','D','W','R','R','N','G','S','U','X','Q','D','Q','P'],
@@ -100,6 +103,7 @@ class PuzzleParserTest(unittest.TestCase):
             ['F','R','Y','O','J','V','T','K','X','Z','G','N','H','B','O'],
             ['A','O','G','K','U','P','F','Q','A','M','Y','L','W','I','M']
         ]
+        # pylint: enable=bad-whitespace
         # yapf: enable
         with open('data/sample-puzzle.puzzle') as puzzle_file:
             words, puzzle = wordsearch.parse_puzzle(puzzle_file)
