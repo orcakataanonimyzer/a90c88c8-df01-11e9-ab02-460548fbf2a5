@@ -28,7 +28,8 @@ PILLAR_SAMPLE_PUZZLE_BOARD = [
 # pylint: enable=bad-whitespace
 # yapf: enable
 
-
+# pylint: disable=invalid-name
+# Test methods tend to get really long, which causes the linter to complain.
 class ArgumentParserTest(unittest.TestCase):
 
     def setup_method(self, method):
@@ -220,3 +221,5 @@ class WordsearchEndToEndTest(unittest.TestCase):
         ])
         # yapf: enable
         assert expected in self.stdout
+
+# pylint: enable=invalid-name
