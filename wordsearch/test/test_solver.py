@@ -1,5 +1,5 @@
-import pytest
 import unittest
+import pytest
 
 import wordsearch.solver
 from wordsearch.solver import Puzzle
