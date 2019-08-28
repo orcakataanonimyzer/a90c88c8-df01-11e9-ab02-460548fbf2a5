@@ -5,8 +5,14 @@ import wordsearch.solver
 from wordsearch.solver import Puzzle
 
 
+# pylint: disable=invalid-name, no-self-use, attribute-defined-outside-init
+# Test methods tend to get really long, which causes the linter to complain.
+# Test methods require the self argument, even if it isn't being used.
+# Attributes may be defined outside of __init__ because they are defined in the
+# setup_method.
 class PuzzleTest(unittest.TestCase):
 
+    # pylint: disable=unused-argument
     def setup_method(self, method):
         # Word list: dog, cat, pig
         # yapf: disable
@@ -18,6 +24,7 @@ class PuzzleTest(unittest.TestCase):
         ]
         # yapf: enable
         self.puzzle = Puzzle(self.board)
+    # pylint: enable=unused-argument
 
     def test_raises_an_exception_if_the_board_is_null(self):
         with pytest.raises(ValueError) as e:
@@ -232,3 +239,5 @@ class PuzzleTest(unittest.TestCase):
             self.puzzle.find_all(words)
         assert str(e.value) == \
             'expected words to be of type list, but got (%s)' % type(words)
+
+# pylint: enable=invalid-name, no-self-use, attribute-defined-outside-init
