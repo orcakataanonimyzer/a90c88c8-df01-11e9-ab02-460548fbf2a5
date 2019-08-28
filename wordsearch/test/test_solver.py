@@ -68,10 +68,10 @@ class PuzzleTest(unittest.TestCase):
         assert (4, 4) == self.puzzle.size
 
     def test_height_returns_the_height_of_the_board(self):
-        assert 4 == self.puzzle.height
+        assert self.puzzle.height == 4
 
     def test_width_returns_the_width_of_the_board(self):
-        assert 4 == self.puzzle.width
+        assert self.puzzle.width == 4
 
     def test_all_positions_is_an_iterator_through_the_entire_board(self):
         positions = [position for position in self.puzzle.all_positions()]
@@ -157,13 +157,13 @@ class PuzzleTest(unittest.TestCase):
 
     def test_get_characters_returns_characters_in_the_given_range(self):
         characters, positions = self.puzzle.get_characters((0, 1), (0, 3))
-        assert 'dog' == ''.join(characters)
+        assert ''.join(characters) == 'dog'
 
         characters, positions = self.puzzle.get_characters((2, 3), (0, 3))
-        assert 'pig' == ''.join(characters)
+        assert ''.join(characters) == 'pig'
 
         characters, positions = self.puzzle.get_characters((3, 0), (1, 2))
-        assert 'cat' == ''.join(characters)
+        assert ''.join(characters) == 'cat'
 
     def test_get_characters_returns_the_positions_in_the_given_range(self):
         characters, positions = self.puzzle.get_characters((0, 1), (0, 3))
