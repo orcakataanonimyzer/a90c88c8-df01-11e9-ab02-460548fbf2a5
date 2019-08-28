@@ -28,22 +28,22 @@ class PuzzleTest(unittest.TestCase):
 
     def test_raises_an_exception_if_the_board_is_null(self):
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle(None)
+            _ = Puzzle(None)
         assert str(e.value) == 'board is empty.'
 
     def test_raises_an_exception_if_the_board_is_an_empty_list(self):
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle([])
+            _ = Puzzle([])
         assert str(e.value) == 'board is empty.'
 
     def test_raises_an_exception_if_the_board_is_empty(self):
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle([[]])
+            _ = Puzzle([[]])
         assert str(e.value) == 'board is empty.'
 
     def test_raises_an_exception_if_board_is_not_a_list(self):
         with pytest.raises(TypeError) as e:
-            puzzle = Puzzle({})
+            _ = Puzzle({})
         assert str(e.value) == 'board is not of type list.'
 
     def test_raises_an_exception_if_the_board_is_not_square(self):
@@ -55,13 +55,13 @@ class PuzzleTest(unittest.TestCase):
         ]
         # yapf: enable
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle(board)
+            _ = Puzzle(board)
         assert str(e.value) == 'board is not square.'
 
     def test_raises_an_exception_if_the_board_is_not_at_least_2x2(self):
         board = [['a']]
         with pytest.raises(ValueError) as e:
-            puzzle = Puzzle(board)
+            _ = Puzzle(board)
         assert str(e.value) == 'board is too small; it must be at least 2x2.'
 
     def test_size_returns_the_width_and_height_as_a_tuple(self):
@@ -156,23 +156,23 @@ class PuzzleTest(unittest.TestCase):
         assert str(e.value) == 'origin is out of bounds.'
 
     def test_get_characters_returns_characters_in_the_given_range(self):
-        characters, positions = self.puzzle.get_characters((0, 1), (0, 3))
+        characters, _ = self.puzzle.get_characters((0, 1), (0, 3))
         assert ''.join(characters) == 'dog'
 
-        characters, positions = self.puzzle.get_characters((2, 3), (0, 3))
+        characters, _ = self.puzzle.get_characters((2, 3), (0, 3))
         assert ''.join(characters) == 'pig'
 
-        characters, positions = self.puzzle.get_characters((3, 0), (1, 2))
+        characters, _ = self.puzzle.get_characters((3, 0), (1, 2))
         assert ''.join(characters) == 'cat'
 
     def test_get_characters_returns_the_positions_in_the_given_range(self):
-        characters, positions = self.puzzle.get_characters((0, 1), (0, 3))
+        _, positions = self.puzzle.get_characters((0, 1), (0, 3))
         assert [(0, 1), (0, 2), (0, 3)] == positions
 
-        characters, positions = self.puzzle.get_characters((2, 3), (0, 3))
+        _, positions = self.puzzle.get_characters((2, 3), (0, 3))
         assert [(2, 3), (1, 3), (0, 3)] == positions
 
-        characters, positions = self.puzzle.get_characters((3, 0), (1, 2))
+        _, positions = self.puzzle.get_characters((3, 0), (1, 2))
         assert [(3, 0), (2, 1), (1, 2)] == positions
 
     def test_get_characters_raises_error_if_position_out_of_bounds(self):
