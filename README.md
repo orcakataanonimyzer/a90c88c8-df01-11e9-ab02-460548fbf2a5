@@ -14,6 +14,7 @@ making changes to the code, follow the steps below.
 Clone the repository with:
 ```
 git clone https://github.com/david-graves/pillar-kata-word-search.git
+cd pillar-kata-word-search
 ```
 Create, and activate, the virtual environment (to avoid any conflicts with your
 global installation of Python.
@@ -22,7 +23,9 @@ global installation of Python.
 make env
 source env/bin/activate
 ```
-Lastly, install the application using `pip`.
+Use `which python` to confirm that the python binary being referenced in your
+path is the one from the virtual environment. Lastly, install the application
+using `pip`.
 
 ```bash
 pip install .
@@ -33,6 +36,10 @@ executed with the following command.
 ```bash
 ./env/bin/wordsearch <FILE>
 ```
+Note: There are sample puzzles in the `data/` directory that can be used with
+the application, including the one that is mentioned in the requirements
+[here](https://github.com/PillarTechnology/kata-word-search).
+
 To see the help menu and usage, pass the `-h` or `--help` option.
 
 ```bash
