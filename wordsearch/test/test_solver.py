@@ -6,6 +6,7 @@ from wordsearch.solver import Puzzle
 
 
 # pylint: disable=invalid-name, no-self-use, attribute-defined-outside-init
+# pylint: disable=too-many-public-methods
 # Test methods tend to get really long, which causes the linter to complain.
 # Test methods require the self argument, even if it isn't being used.
 # Attributes may be defined outside of __init__ because they are defined in the
@@ -239,5 +240,5 @@ class PuzzleTest(unittest.TestCase):
             self.puzzle.find_all(words)
         assert str(e.value) == \
             'expected words to be of type list, but got (%s)' % type(words)
-
-# pylint: enable=invalid-name, no-self-use, attribute-defined-outside-init
+# pylint: enable=too-many-public-methods
+# pylint: enable=invalid-name, no-self-use, attribute-defined-outside-init,
