@@ -66,7 +66,7 @@ class Puzzle:
     def __init__(self, board):
         if board in [None, [], [[]]]:
             raise ValueError('board is empty.')
-        if type(board) is not list:
+        if not isinstance(board, list):
             raise TypeError('board is not of type list.')
         for row in board:
             if len(row) != len(board):
@@ -254,7 +254,7 @@ class Puzzle:
                 'the specified word (%s) is larger than the board.' % word)
         if len(word) < MIN_WORD_SIZE:
             raise ValueError('the specified word (%s) is too short.' % word)
-        if type(word) is not str:
+        if not isinstance(word, str):
             raise TypeError('the specified word is not of type str.')
         for position in self.all_positions():
             for target in self.get_valid_moves(position,
@@ -282,7 +282,7 @@ class Puzzle:
         """
         if words is None:
             raise ValueError('the specified list of words is None.')
-        if type(words) is not list:
+        if not isinstance(words, list):
             raise TypeError('expected words to be of type list, but got (%s)' %
                             type(words))
         results = {}
